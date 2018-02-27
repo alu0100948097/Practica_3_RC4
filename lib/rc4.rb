@@ -10,6 +10,13 @@ class Rc4
         @texto_c=[]
 	end
     
+    def reset
+        @semilla=[]
+        @texto=[]
+        @K=[]
+        @texto_c=[]
+    end
+    
     def inicializacion
         for i in (0..@S.length-1)
             @K.push(semilla[i%semilla.length])
