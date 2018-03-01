@@ -1,3 +1,5 @@
+require 'colorize'
+
 class Rc4
 	
 	attr_reader :S, :semilla, :texto, :K
