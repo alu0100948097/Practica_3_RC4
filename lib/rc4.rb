@@ -13,6 +13,7 @@ class Rc4
 	end
     
     def reset
+        @S=(0..255).to_a
         @semilla=[]
         @texto=[]
         @K=[]
@@ -75,4 +76,50 @@ class Rc4
         end
 	end
     
+end
+
+@test=Rc4.new
+
+loop do
+	puts "PRACTICA: CIFRADO DE RC4"
+	puts "1: Cifrar"
+	puts "2: Salir"
+	print "Introduzca una opcion: "
+	opcion = gets.chomp
+	case opcion
+		when '1'
+            system "clear"
+			print "Introduzca la semilla de clave: "
+            semilla=gets.chomp.split(',')
+            while semilla.empty?
+				system "clear"
+                puts "No se ha introducido semilla de clave".red
+				puts
+				print "Introduza la semilla de clave: "
+				semilla=gets.chomp.split(',')
+			end
+            @test.semilla=semilla
+            print "Introduzca el texto original: "
+            texto=gets.chomp.split(',')
+            while texto.empty?
+				system "clear"
+                puts "No se ha introducido texto original".red
+				puts
+				print "Introduza el texto original: "
+				texto=gets.chomp.split(',')
+			end
+            puts
+            @test.texto=texto
+            @test.inicializacion
+            @test.cifrado
+            @test.reset
+            puts
+		when '2'
+			system "clear"
+			break
+        else
+            system "clear"
+            puts "La opción introducida es incorrecta".red
+            puts
+	end
 end
