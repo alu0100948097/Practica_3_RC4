@@ -32,13 +32,22 @@ class Rc4
     end
     
     def cifrado
+        w=3
         i=0
         j=0
+        k=0
+        t=0
         for r in (0..@texto.length-1)
-            i=(i+1)%@S.length
-            j=(j+@S[i])%@S.length
+            i=(i+w)%@S.length
+            j=(k+@S[(j+@S[i])%@S.length])%@S.length
+            k=(i+k+@S[j%@S.length])%@S.length
             @S[i],@S[j]=@S[j],@S[i]
-            t=(@S[i]+@S[j])%@S.length
+            t=(@S[(j+@S[(i+@S[(t+k)%@S.length])%@S.length])%@S.length])%@S.length
+            #El código comentado es el RC4 sin modificación
+            #i=(i+1)%@S.length
+            #j=(j+@S[i])%@S.length
+            #@S[i],@S[j]=@S[j],@S[i]
+            #t=(@S[i]+@S[j])%@S.length
             puts "Byte #{r+1} de secuencia cifrante: S[#{t}]=#{@S[t]}:      #{@S[t].to_s(2).rjust(8,'0')}"
             puts "Byte #{r+1} de texto original: M[#{r+1}]=#{@texto[r]}:            #{@texto[r].to_s(2).rjust(8,'0')}"
             @texto_c.push((@S[t].to_s(2).rjust(8,'0').unpack('C*')).zip(@texto[r].to_s(2).rjust(8,'0').unpack('C*')))
